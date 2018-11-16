@@ -1,2 +1,2 @@
 # caasp-monitoring
-Grafana dashboards for Kubic/CaaSP monitoring
+Example files for Kubic/CaaSP monitoring
