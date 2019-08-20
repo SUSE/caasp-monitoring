@@ -5,7 +5,7 @@ metadata:
   name: grafana-dashboards-caasp-namespaces
   namespace: monitoring
   labels:
-     grafana_dashboard: "1"
+    grafana_dashboard: "1"
 data:
   caasp-namespaces.json: |-
     {
@@ -225,7 +225,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(kube_node_status_allocatable_memory_bytes{node!=\"$masters\"})",
+              "expr": "sum(kube_node_status_allocatable_memory_bytes{node!~\"$masters\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -386,7 +386,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(kube_node_status_allocatable_cpu_cores{node!=\"$masters\"})",
+              "expr": "sum(kube_node_status_allocatable_cpu_cores{node!~\"$masters\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -546,7 +546,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(kube_node_status_allocatable_pods{node!=\"$masters\"})",
+              "expr": "sum(kube_node_status_allocatable_pods{node!~\"$masters\"})",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -786,7 +786,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "(sum(irate(container_cpu_usage_seconds_total{namespace!=\"\"}[5m])) / sum(kube_node_status_allocatable_cpu_cores{node!=\"$masters\"})) * 100",
+              "expr": "(sum(irate(container_cpu_usage_seconds_total{namespace!=\"\"}[5m])) / sum(kube_node_status_allocatable_cpu_cores{node!~\"$masters\"})) * 100",
               "format": "time_series",
               "hide": false,
               "intervalFactor": 1,
@@ -869,7 +869,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\"}) / sum(kube_node_status_allocatable_memory_bytes{node!=\"$masters\"}) * 100",
+              "expr": "sum(container_memory_working_set_bytes{namespace=\"$namespace\"}) / sum(kube_node_status_allocatable_memory_bytes{node!~\"$masters\"}) * 100",
               "format": "time_series",
               "hide": false,
               "instant": false,
@@ -952,7 +952,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "sum(kube_pod_info{namespace=\"$namespace\"}) / sum(kube_node_status_allocatable_pods{node!=\"$masters\"}) * 100",
+              "expr": "sum(kube_pod_info{namespace=\"$namespace\"}) / sum(kube_node_status_allocatable_pods{node!~\"$masters\"}) * 100",
               "format": "time_series",
               "hide": false,
               "intervalFactor": 1,
