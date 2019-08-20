@@ -1,2 +1,2 @@
 # caasp-monitoring
-Example files for Kubic/CaaSP monitoring
+Example files for SUSE CaaS Platform monitoring
