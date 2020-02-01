@@ -1250,6 +1250,6 @@ data:
         ]
       },
       "timezone": "",
-      "title": "CaaSP ETCD Cluster",
+      "title": "SUSE CaaS Platform ETCD Cluster",
       "version": 215
     }
