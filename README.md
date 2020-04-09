@@ -1,12 +1,47 @@
 # SUSE CaaS Platform Grafana Monitoring Dashboards
+
 Example files for SUSE CaaS Platform Grafana monitoring dashboards.
 
+- [Monitor Whole Cluster](#monitor-whole-cluster)
+- [Monitor All Nodes](#monitor-all-nodes)
+- [Monitor All Pods](#monitor-all-pods)
+- [Monitor All Namespaces](#monitor-all-namespaces)
+- [Monitor ETCD Cluster](#monitor-etcd-cluster)
+- [Monitor Certificates Status](#monitor-certificates-status)
+
+## Monitor Whole Cluster
+
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-cluster.yaml
+```
+
+## Monitor All Nodes
+
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-nodes.yaml
+```
+
+## Monitor All Pods
+
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-pods.yaml
+```
+
+## Monitor All Namespaces
+
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-namespaces.yaml
+```
 
 ## Monitor ETCD Cluster
 
-Install [etcd-cluster.yaml](grafana-dashboards-caasp-etcd-cluster.yaml) to monitor the etcd cluster and also need to manually setup extra configuration to Prometheus server.
+Apply [etcd-cluster.yaml](grafana-dashboards-caasp-etcd-cluster.yaml) to monitor the etcd cluster.
 
-The etcd server expose metrics on `/metrics` endpoint, the Prometheus jobs does not scrapes it by default. We need to add a new job to Prometheus configmap to scapes metrics from the etcd cluster. Also since the etcd cluster run in https, we need the etcd client certificate in order to access the `/metrics` endpoint.
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-etcd-cluster.yaml
+```
+
+Then we need to manually setup extra configuration to Prometheus server. The etcd server expose metrics on `/metrics` endpoint, the Prometheus jobs does not scrapes it by default. We need to add a new job to Prometheus configmap to scapes metrics from the etcd cluster. Also since the etcd cluster run in https, we need the etcd client certificate in order to access the `/metrics` endpoint.
 
 1. At one of the Kubernetes control plane node, create the etcd client certificate to secret `etcd-certs` in monitoring namespace.
     ```
@@ -60,3 +95,9 @@ The etcd server expose metrics on `/metrics` endpoint, the Prometheus jobs does 
     ```
 
 5. After saving the prometheus server configmap, the prometheus server would auto reload and apply new setting.
+
+## Monitor Certificates Status
+
+```
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-certs.yaml
+```
