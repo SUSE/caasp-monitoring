@@ -99,5 +99,5 @@ Then we need to manually setup extra configuration to Prometheus server. The etc
 ## Monitor Certificates Status
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-certs.yaml
+kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/grafana-dashboards-caasp-certificates.yaml
 ```
