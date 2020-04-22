@@ -255,7 +255,7 @@ data:
           ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Addon PKI Certs Expiry",
+          "title": "Secret PKI Certs Expiry",
           "transform": "table",
           "type": "table"
         }
