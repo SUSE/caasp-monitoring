@@ -221,7 +221,7 @@ data:
               "alias": "Time",
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "link": false,
-              "pattern": "/(__name__|^name$|Time|controller_revision_hash|instance|job|kubernetes_namespace|kubernetes_pod_name|pod_template_generation|pod_template_hash|app|secret_namespace|heritage)/",
+              "pattern": "/(__name__|^name$|Time|controller_revision_hash|instance|job|kubernetes_namespace|kubernetes_pod_name|pod_template_generation|pod_template_hash|app|heritage)/",
               "type": "hidden"
             },
             {
