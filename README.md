@@ -43,9 +43,27 @@ kubectl apply -f https://raw.githubusercontent.com/SUSE/caasp-monitoring/master/
 
 Then we need to manually set up extra configuration to Prometheus server. The etcd server exposes metrics on `/metrics` endpoint, the Prometheus jobs do not scrape it by default. We need to add a new job to Prometheus configmap to scapes metrics from the etcd cluster. Also since the etcd cluster run in https, we need the etcd client certificate in order to access the `/metrics` endpoint.
 
-1. At one of the Kubernetes control plane node, create the etcd client certificate to secret `etcd-certs` in monitoring namespace.
+1. On the admin node, create a new etcd client certificate and stores to secret `etcd-certs` in monitoring namespace.
     ```
-    kubectl --kubeconfig=/etc/kubernetes/admin.conf -n monitoring create secret generic etcd-certs --from-file=/etc/kubernetes/pki/etcd/ca.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.crt --from-file=/etc/kubernetes/pki/etcd/healthcheck-client.key
+    cat << EOF > my-cluster/pki/etcd/openssl-monitoring-client.conf
+    [req]
+    distinguished_name = req_distinguished_name
+    req_extensions = v3_req
+    prompt = no
+
+    [v3_req]
+    keyUsage = digitalSignature,keyEncipherment
+    extendedKeyUsage = clientAuth
+
+    [req_distinguished_name]
+    O = system:masters
+    CN = kube-etcd-monitoring-client
+    EOF
+
+    openssl req -nodes -new -newkey rsa:2048 -config my-cluster/pki/etcd/openssl-monitoring-client.conf -out my-cluster/pki/etcd/monitoring-client.csr -keyout my-cluster/pki/etcd/monitoring-client.key
+    openssl x509 -req -days 365 -CA my-cluster/pki/etcd/ca.crt -CAkey my-cluster/pki/etcd/ca.key -CAcreateserial -in my-cluster/pki/etcd/monitoring-client.csr -out my-cluster/pki/etcd/monitoring-client.crt -sha256 -extfile my-cluster/pki/etcd/openssl-monitoring-client.conf -extensions v3_req
+
+    kubectl -n monitoring create secret generic etcd-certs --from-file=my-cluster/pki/etcd/ca.crt --from-file=my-cluster/pki/etcd/monitoring-client.crt --from-file=my-cluster/pki/etcd/monitoring-client.key
     ```
 
 2. Get all the etcd cluster nodes' in-cluster IP address.
@@ -90,8 +108,8 @@ Then we need to manually set up extra configuration to Prometheus server. The et
       scheme: https
       tls_config:
         ca_file: /etc/secrets/ca.crt
-        cert_file: /etc/secrets/healthcheck-client.crt
-        key_file: /etc/secrets/healthcheck-client.key
+        cert_file: /etc/secrets/monitoring-client.crt
+        key_file: /etc/secrets/monitoring-client.key
     ```
 
 5. After saving the prometheus server configmap, the prometheus server would auto reload and apply new setting.
