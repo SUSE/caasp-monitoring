@@ -8,7 +8,7 @@ Install [etcd-cluster.yaml](grafana-dashboards-caasp-etcd-cluster.yaml) to monit
 
 The etcd server expose metrics on `/metrics` endpoint, the Prometheus jobs does not scrapes it by default. We need to add a new job to Prometheus configmap to scapes metrics from the etcd cluster. Also since the etcd cluster run in https, we need the etcd client certificate in order to access the `/metrics` endpoint.
 
-1. At the admin node, creates a new etcd client certificate and stores to secret `etcd-certs` in monitoring namespace.
+1. On the admin node, create a new etcd client certificate and stores to secret `etcd-certs` in monitoring namespace.
     ```
     cat << EOF > my-cluster/pki/etcd/openssl-monitoring-client.conf
     [req]
