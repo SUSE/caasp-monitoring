@@ -126,7 +126,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "count(cert_exporter_cert_expires_in_seconds <= 604800)+count(cert_exporter_kubeconfig_expires_in_seconds <= 604800)+count(cert_exporter_secret_expires_in_seconds <= 604800) OR on() vector(0)",
+              "expr": "count(cert_exporter_cert_expires_in_seconds <= 2592000)+count(cert_exporter_kubeconfig_expires_in_seconds <= 2592000)+count(cert_exporter_secret_expires_in_seconds <= 2592000) OR on() vector(0)",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -135,7 +135,7 @@ data:
           "thresholds": "",
           "timeFrom": null,
           "timeShift": null,
-          "title": "Expiration within 7 days",
+          "title": "Expiration within 1 month",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [],
@@ -204,7 +204,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "count(604800 < cert_exporter_cert_expires_in_seconds and cert_exporter_cert_expires_in_seconds <= 2592000)+count(604800 < cert_exporter_kubeconfig_expires_in_seconds and cert_exporter_kubeconfig_expires_in_seconds <= 2592000)+count(604800 < cert_exporter_secret_expires_in_seconds and cert_exporter_secret_expires_in_seconds <= 2592000) OR on() vector(0)",
+              "expr": "count(2592000 < cert_exporter_cert_expires_in_seconds and cert_exporter_cert_expires_in_seconds <= 7776000)+count(2592000 < cert_exporter_kubeconfig_expires_in_seconds and cert_exporter_kubeconfig_expires_in_seconds <= 7776000)+count(2592000 < cert_exporter_secret_expires_in_seconds and cert_exporter_secret_expires_in_seconds <= 7776000) OR on() vector(0)",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -213,7 +213,7 @@ data:
           "thresholds": "",
           "timeFrom": null,
           "timeShift": null,
-          "title": "Expiration within 7 and 30 days",
+          "title": "Expiration within 1 and 3 months",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [],
@@ -282,7 +282,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "count(cert_exporter_cert_expires_in_seconds > 2592000)+count(cert_exporter_kubeconfig_expires_in_seconds > 2592000)+count(cert_exporter_secret_expires_in_seconds > 2592000) OR on() vector(0)",
+              "expr": "count(cert_exporter_cert_expires_in_seconds > 7776000)+count(cert_exporter_kubeconfig_expires_in_seconds > 7776000)+count(cert_exporter_secret_expires_in_seconds > 7776000) OR on() vector(0)",
               "format": "time_series",
               "intervalFactor": 1,
               "refId": "A"
@@ -291,7 +291,7 @@ data:
           "thresholds": "",
           "timeFrom": null,
           "timeShift": null,
-          "title": "Expiration after 30 days",
+          "title": "Expiration after 3 months",
           "type": "singlestat",
           "valueFontSize": "80%",
           "valueMaps": [],
@@ -344,8 +344,8 @@ data:
               "decimals": 2,
               "pattern": "Value",
               "thresholds": [
-                "604800",
-                "2592000"
+                "2592000",
+                "7776000"
               ],
               "type": "number",
               "unit": "dtdurations"
@@ -407,8 +407,8 @@ data:
               "decimals": 2,
               "pattern": "Value",
               "thresholds": [
-                "604800",
-                "2592000"
+                "2592000",
+                "7776000"
               ],
               "type": "number",
               "unit": "dtdurations"
@@ -470,8 +470,8 @@ data:
               "decimals": 2,
               "pattern": "Value",
               "thresholds": [
-                "604800",
-                "2592000"
+                "2592000",
+                "7776000"
               ],
               "type": "number",
               "unit": "dtdurations"
